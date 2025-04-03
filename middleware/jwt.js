@@ -27,4 +27,16 @@ const authorization = async (req, res, next) => {
     }
   };
   
+  // export const authorizecheck = async (req, res, next) => {
+  //   try {
+  //     if (req.user.id === req.param.id) {
+  //       next();
+  //     } else {
+  //       res.status(401).json({ msg: "you are not authorized to get or changes the details" });
+  //     }
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
+
   export default authorization;

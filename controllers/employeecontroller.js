@@ -63,7 +63,7 @@ export const deleteEmployeeById = async (req, res) => {
         if (!employee) {
             return res.status(404).json({ msg: "Employee not found" });
         }
-        await Employee.destroy();
+        await Employee.destroy({ where: { id } });
         res.status(200).json({ msg: `Employee with ID ${id} deleted successfully!` });
 
     } catch (error) {

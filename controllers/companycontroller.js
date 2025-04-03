@@ -91,7 +91,7 @@ export const deleteCompanyById = async (req, res) => {
       if (!company) {
         return res.status(404).json({ message: "company not found" });
       }
-      await user.destroy(); 
+      await Company.destroy({ where: { id } }); 
       res.json({ message: "company and associated employees deleted successfully" });
     } catch (error) {
       res.status(500).json({ error: error.message });

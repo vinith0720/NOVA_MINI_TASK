@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
   class Employee extends Model {
     
     static associate(models) {
-      Employee.belongsTo(models.Company,{foreignKey:"companyId",as:"employees"})
+      Employee.belongsTo(models.Company,{foreignKey:"companyId",as:"company",onDelete:"CASCADE",onUpdate:"CASCADE"})
     }
   }
   Employee.init({

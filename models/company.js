@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Company.hasMany(models.Employee,{foreignKey:"companyId",as:"employees"})
+      Company.hasMany(models.Employee,{foreignKey:"companyId",as:"employees",onUpdate: "CASCADE", onDelete: "CASCADE" })
     }
   }
   Company.init({

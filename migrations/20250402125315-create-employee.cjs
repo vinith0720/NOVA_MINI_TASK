@@ -12,13 +12,16 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique:true
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique:true
       },
       companyId: {
         type: Sequelize.INTEGER,
+        allowNull:false,
         references:{model:"Company",key:"id"},
         onDelete:"CASCADE",
         onUpdate:"CASCADE"
