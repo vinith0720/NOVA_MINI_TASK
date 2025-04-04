@@ -38,7 +38,7 @@ router.post( "/profile/:id",authorization, idValidation, validationErrormiddlewa
   (req, res, next) => {
     awsUpload(req, res, function (err) {
       if (err) {
-        return res.status(400).json({ error });
+        return res.status(400).json({ err });
       }
       next();
     });
