@@ -48,7 +48,4 @@ router.post( "/profile/:id",authorization, idValidation, validationErrormiddlewa
 );
 
 
-router.delete("/profile",deleteEmployeeProfile)
-
-
 export default router;  
