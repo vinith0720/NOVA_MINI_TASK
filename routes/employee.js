@@ -7,6 +7,9 @@ import {
   putEmployeeById,
   deleteEmployeeById,
   getEmployeeById,
+  postEmployeeProfileById,
+  deleteEmployeeProfile,
+  employeefoundornot,
 } from "../controllers/employeecontroller.js";
 
 import {
@@ -18,6 +21,7 @@ import {
 
 import authorization from '../middleware/jwt.js';
 
+import awsUpload from '../middleware/multers.js';
 
 router.get('/',authorization, getEmployee);
 
@@ -28,6 +32,23 @@ router.put("/:id", authorization, putEmployeeValidation, validationErrormiddlewa
 router.delete("/:id", authorization, idValidation, validationErrormiddleware, deleteEmployeeById); 
 
 router.get("/:id", authorization, idValidation, validationErrormiddleware, getEmployeeById)
+
+// profileurl for aws releted to employee
+
+router.post( "/profile/:id",authorization, idValidation, validationErrormiddleware, employeefoundornot, 
+  (req, res, next) => {
+    awsUpload(req, res, function (err) {
+      if (err) {
+        return res.status(400).json({ error });
+      }
+      next();
+    });
+  },
+  postEmployeeProfileById
+);
+
+
+router.delete("/profile",deleteEmployeeProfile)
 
 
 export default router;  

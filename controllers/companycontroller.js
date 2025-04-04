@@ -6,7 +6,7 @@ export const getCompany = async (req,res) => {
         const results = await Company.findAll({
             include :[{
                 model :Employee,
-                attributes:["id","name","email"],
+                attributes:["id","name","email","profileurl"],
                 as:"employees"
             },],
         });
@@ -23,7 +23,7 @@ export const getCompanyById = async (req,res)=>{
       const company = await Company.findByPk(id, {
         include: [{
             model: Employee,
-            attributes: ["id","name","email"],
+            attributes: ["id","name","email","profileurl"],
             as :"employees"
           },],
       });

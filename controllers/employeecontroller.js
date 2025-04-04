@@ -1,4 +1,7 @@
 import db from '../models/index.js';
+import {bucket} from '../middleware/multers.js';
+import { DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { where } from 'sequelize';
 const {Employee} = db;
 
 
@@ -82,4 +85,64 @@ export const getEmployeeById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error });
     }
+};
+
+
+// employee route for profilepic
+export const employeefoundornot = async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id);
+    const employee = await Employee.findByPk(id);
+    if (!employee) {
+      return res.status(404).json({ msg: "Employee not found" });
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const postEmployeeProfileById = async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (!req.file || !req.file.location) {
+        return res.status(400).json({ message: "Profile image is required" });
+      }
+      const profileurl = req.file.location;
+      const [updatedCount] = await Employee.update(
+        { profileurl }, 
+        { where: { id } }
+      );
+  
+      if (updatedCount === 1) {
+        return res.status(200).json({
+          message: "File uploaded successfully",
+          profileurl,
+        });
+      } else {
+        return res.status(400).json({ message: "No changes made to the Employee!" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Upload failed", error });
+    }
+  };
+
+  
+
+export const deleteEmployeeProfile = async (req, res) => {
+  const filepath = req.body.filepath;
+  if (!filepath) {
+    return res.status(400).json({ error: "give the path of the deleted file" });
+  }
+  const params = {
+    Bucket: bucket,
+    Key: filepath,
+  };
+  try {
+    const command = new DeleteObjectCommand(params);
+    const result = await s3.send(command);
+    res.status(200).json({ msg: "deleted successully", result });
+  } catch (error) {
+    res.status(500).json({ msg: "Error deleting file", error });
+  }
 };
