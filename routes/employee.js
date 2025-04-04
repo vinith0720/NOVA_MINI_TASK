@@ -8,7 +8,6 @@ import {
   deleteEmployeeById,
   getEmployeeById,
   postEmployeeProfileById,
-  deleteEmployeeProfile,
   employeefoundornot,
 } from "../controllers/employeecontroller.js";
 
