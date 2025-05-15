@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
@@ -16,17 +16,17 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique:true
+        unique: true,
       },
-      profileurl:{
-        type : Sequelize.STRING,
+      profileurl: {
+        type: Sequelize.STRING,
       },
       companyId: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        references:{model:"Company",key:"id"},
-        onDelete:"CASCADE",
-        onUpdate:"CASCADE"
+        allowNull: false,
+        references: { model: 'Company', key: 'id' },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -37,10 +37,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         // defaultValue:Sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('employee');
-  }
+  },
 };

@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.779.0",
@@ -22,5 +24,8 @@
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.2",
     "url": "^0.11.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
   }
 }

@@ -1,5 +1,5 @@
 import express from 'express';
-const router = express.Router()
+const router = express.Router();
 
 import {
   getEmployee,
@@ -9,32 +9,61 @@ import {
   getEmployeeById,
   postEmployeeProfileById,
   employeefoundornot,
-} from "../controllers/employeecontroller.js";
+} from '../controllers/employeecontroller.js';
 
 import {
   validationErrormiddleware,
   idValidation,
   bodyValidationEmployee,
   putEmployeeValidation,
-} from "../middleware/validations.js";
+} from '../middleware/validations.js';
 
 import authorization from '../middleware/jwt.js';
 
 import awsUpload from '../middleware/multers.js';
 
-router.get('/',authorization, getEmployee);
+router.get('/', authorization, getEmployee);
 
-router.post("/" , authorization, bodyValidationEmployee, validationErrormiddleware, postEmployee);
+router.post(
+  '/',
+  authorization,
+  bodyValidationEmployee,
+  validationErrormiddleware,
+  postEmployee
+);
 
-router.put("/:id", authorization, putEmployeeValidation, validationErrormiddleware, putEmployeeById);
+router.put(
+  '/:id',
+  authorization,
+  putEmployeeValidation,
+  validationErrormiddleware,
+  putEmployeeById
+);
 
-router.delete("/:id", authorization, idValidation, validationErrormiddleware, deleteEmployeeById); 
+router.delete(
+  '/:id',
+  authorization,
+  idValidation,
+  validationErrormiddleware,
+  deleteEmployeeById
+);
 
-router.get("/:id", authorization, idValidation, validationErrormiddleware, getEmployeeById)
+router.get(
+  '/:id',
+  authorization,
+  idValidation,
+  validationErrormiddleware,
+  getEmployeeById
+);
 
 // profileurl for aws releted to employee
 
-router.post( "/profile/:id",authorization, idValidation, validationErrormiddleware, employeefoundornot, 
+router.post(
+  '/profile/:id',
+  authorization,
+  idValidation,
+  validationErrormiddleware,
+  employeefoundornot,
   (req, res, next) => {
     awsUpload(req, res, function (err) {
       if (err) {
@@ -46,5 +75,4 @@ router.post( "/profile/:id",authorization, idValidation, validationErrormiddlewa
   postEmployeeProfileById
 );
 
-
-export default router;  
+export default router;

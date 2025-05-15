@@ -1,21 +1,22 @@
 'use strict';
 
-import fs from "fs";
-import path from "path";
-import { Sequelize, DataTypes } from "sequelize";
-import { fileURLToPath, pathToFileURL } from "url";
-import dbconfig from "../config/config.js";
-
+import fs from 'fs';
+import path from 'path';
+import { Sequelize, DataTypes } from 'sequelize';
+import { fileURLToPath, pathToFileURL } from 'url';
+import dbconfig from '../config/config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const env = process.env.NODE_ENV || "development";
+const env = process.env.NODE_ENV || 'development';
 const config = dbconfig[env];
 
 if (!config) {
-  console.error(`❌ Database configuration for environment '${env}' not found!`);
-  process.exit(1); 
+  console.error(
+    `❌ Database configuration for environment '${env}' not found!`
+  );
+  process.exit(1);
 }
 
 const db = {};
@@ -25,11 +26,13 @@ const sequelize = config.use_env_variable
   : new Sequelize(config.database, config.username, config.password, config);
 
 const loadModels = async () => {
-  const files = fs.readdirSync(__dirname).filter(
+  const files = fs
+    .readdirSync(__dirname)
+    .filter(
       (file) =>
-        file.indexOf(".") !== 0 &&
+        file.indexOf('.') !== 0 &&
         file !== path.basename(__filename) &&
-        file.endsWith(".js")
+        file.endsWith('.js')
     );
 
   for (const file of files) {
@@ -46,12 +49,10 @@ const loadModels = async () => {
     }
   });
 
-  console.log("Loaded models:", Object.keys(db));
+  console.log('Loaded models:', Object.keys(db));
 };
-  
-await loadModels();
-  
 
+await loadModels();
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
